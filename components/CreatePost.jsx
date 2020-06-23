@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader, Input } from 'antd';
+import { PageHeader, Input, Button } from 'antd';
 
 const { TextArea } = Input;
 
@@ -29,6 +29,11 @@ const CreatePost = (props) => {
           <div className='post_input'>
             <TextArea rows={4} placeholder='Post content' />
           </div>
+        </div>
+        <div className='post_input_button'>
+          <Button type='primary' size='large'>
+            Create Post
+          </Button>
         </div>
       </div>
     </div>
