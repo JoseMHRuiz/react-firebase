@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageHeader } from 'antd';
 import './Posts.css';
 import PostSnippet from './PostSnippet';
 import api from '../mock_api';
 import _ from 'lodash';
+import db from '../firebase';
 
 const Posts = (props) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    let postRef = db.collection('posts');
+    postRef.get().then((posts) => {
+      posts.forEach((post) => {
+        let data = post.data();
+        let { id } = post;
+        let payload = {
+          id,
+          ...data,
+        };
+
+        setPosts((posts) => [...posts, payload]);
+      });
+    });
+  }, []);
   return (
     <div className='posts_contariner'>
       <div className='page_header_container'>
@@ -27,12 +45,12 @@ const Posts = (props) => {
           );
         })}{' '} */}
 
-        {api.map((article, idx) => (
+        {posts.map((article, idx) => (
           <PostSnippet
             key={idx}
-            id={idx}
+            id={article.id}
             title={article.title}
-            content={article.content}
+            content={article.content.substring(0, 1000) + '...'}
           />
         ))}
       </div>

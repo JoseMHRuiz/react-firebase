@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageHeader, Input, Button } from 'antd';
+import db from '../firebase';
 
 const { TextArea } = Input;
 
 const CreatePost = (props) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const onTitleChange = (event) => setTitle(event.target.value);
+  const onContentChange = (event) => setContent(event.target.value);
+
+  const onCreatePost = () => {
+    let postRef = db.collection('posts');
+
+    let payload = { title, content };
+
+    postRef.add(payload).then(function (doc) {
+      console.log('test', doc.id);
+    });
+  };
+
   return (
     <div className='create_post_container'>
       <div className='page_header_container'>
@@ -19,7 +36,11 @@ const CreatePost = (props) => {
             <h2>Post Title</h2>
           </div>
           <div className='post_input'>
-            <Input placeholder='Post title' />
+            <Input
+              placeholder='Post title'
+              value={title}
+              onChange={onTitleChange}
+            />
           </div>
         </div>
         <div className='post_input_container'>
@@ -27,11 +48,16 @@ const CreatePost = (props) => {
             <h2>Post Content</h2>
           </div>
           <div className='post_input'>
-            <TextArea rows={4} placeholder='Post content' />
+            <TextArea
+              rows={4}
+              placeholder='Post content'
+              value={content}
+              onChange={onContentChange}
+            />
           </div>
         </div>
         <div className='post_input_button'>
-          <Button type='primary' size='large'>
+          <Button type='primary' size='large' onClick={onCreatePost}>
             Create Post
           </Button>
         </div>
