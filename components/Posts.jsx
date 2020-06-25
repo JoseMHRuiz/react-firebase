@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { PageHeader } from 'antd';
 import './Posts.css';
 import PostSnippet from './PostSnippet';
-import api from '../mock_api';
 import _ from 'lodash';
 import db from '../firebase';
 
@@ -49,7 +48,7 @@ const Posts = (props) => {
           <PostSnippet
             key={idx}
             id={article.id}
-            title={article.title}
+            title={_.capitalize(article.title)}
             content={article.content.substring(0, 1000) + '...'}
           />
         ))}

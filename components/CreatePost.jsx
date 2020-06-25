@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageHeader, Input, Button } from 'antd';
 import db from '../firebase';
+import { navigate } from '@reach/router';
 
 const { TextArea } = Input;
 
@@ -14,11 +15,15 @@ const CreatePost = (props) => {
   const onCreatePost = () => {
     let postRef = db.collection('posts');
 
-    let payload = { title, content };
+    let payload = { title, content }; // create an object without key
 
     postRef.add(payload).then(function (doc) {
-      console.log('test', doc.id);
+      console.log('Document succesfully written', doc.id);
     });
+
+    setTitle('');
+    setContent('');
+    navigate(`/posts`);
   };
 
   return (
