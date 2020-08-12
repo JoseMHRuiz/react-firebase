@@ -1,6 +1,7 @@
 import React from 'react';
 import Posts from './Posts';
 import Post from './Post';
+import UpdatePost from './UpdatePost';
 import { Router, Link } from '@reach/router';
 import CreatePost from './CreatePost';
 import { Menu } from 'antd';
@@ -25,6 +26,7 @@ const App = (props) => {
         <Posts default path='posts' />
         <CreatePost path='create_post' />
         <Post path='post/:id' />
+        <UpdatePost path='update_post/:id' />
       </Router>
     </div>
   );
